@@ -16,6 +16,7 @@ public Employee(long id, String name, LocalDate birthDate, int salary, String de
 	this.salary = salary;
 	this.department = department;
 }
+// V.R. bold decision!
 public Employee(Employee employee) {
 	id = employee.id;
 	name = employee.name;

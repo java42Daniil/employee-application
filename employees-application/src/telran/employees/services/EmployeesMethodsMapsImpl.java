@@ -103,6 +103,11 @@ public class EmployeesMethodsMapsImpl implements EmployeesMethods {
 
 	@Override
 	public Iterable<Employee> getEmployeesByDepartmentAndSalary(String department, int salaryFrom, int salaryTo) {
+		/* V.R. The variable name PempSallarySet) has to be empSallaryList.
+		 *  More better is to write all in the single line. Like follwing:
+		 *  return getEmployeesFromList(employeesDepartment.get(department).stream()
+		 *  .filter(e -> e.salary >= salaryFrom && e.salary <= salaryTo).toList());
+		 */
 		List<Employee> empSallarySet = employeesDepartment.get(department).stream()
 				.filter(e -> e.salary >= salaryFrom && e.salary <= salaryTo).toList();
 		return getEmployeesFromList(empSallarySet);
@@ -114,6 +119,10 @@ public class EmployeesMethodsMapsImpl implements EmployeesMethods {
 			return ReturnCode.EMPLOYEE_NOT_FOUND;
 		}
 		Employee emplToUpdate = mapEmployees.get(id);
+		/* V.R.
+		 *  What to do if newSalary==emplToUpdate.salary?
+		 *  There is the special returned code ==SALARY_NOT_UPDATED
+		 */
 		removeEmpSalary(emplToUpdate);
 		emplToUpdate.salary = newSalary;
 		employeesSalary.computeIfAbsent(newSalary, k -> new LinkedList<Employee>()).add(emplToUpdate);
@@ -126,6 +135,10 @@ public class EmployeesMethodsMapsImpl implements EmployeesMethods {
 			return ReturnCode.EMPLOYEE_NOT_FOUND;
 		}
 		Employee emplToUpdate = mapEmployees.get(id);
+		/* V.R.
+		 *  What to do if newDepartment==emplToUpdate.department?
+		 *  There is the special returned code ==DEPARTMENT_NOT_UPDATED
+		 */
 		removeEmpDepartment(emplToUpdate);
 		emplToUpdate.department = newDepartment;
 		employeesDepartment.computeIfAbsent(newDepartment, k -> new LinkedList<Employee>()).add(emplToUpdate);
