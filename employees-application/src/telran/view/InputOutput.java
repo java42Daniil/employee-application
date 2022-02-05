@@ -51,6 +51,9 @@ public interface InputOutput {
 	}
 	default Integer readInt(String prompt, int min, int max) {
 		String errorMessage = String.format("Input must be integer in range[%d,%d]", min, max);
+		/* V.R. It is better to add max and min also to prompt. 
+		 *  This is way to explain to user what exactly he has to enter.
+		 */
 		try {
 			return readObject(prompt, errorMessage, str -> {
 				int value = Integer.parseInt(str);
@@ -84,6 +87,9 @@ public interface InputOutput {
 	}
 	default LocalDate readDate(String prompt, DateTimeFormatter formatter) {
 		try {
+			/* V.R. It is better to add format string to prompt. 
+			 *  This is way to explain to user what exactly he has to enter.
+			 */
 			return readObject(prompt, "incorrect data format", str -> {
 				return LocalDate.parse(str, formatter);
 			});
