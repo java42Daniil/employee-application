@@ -12,7 +12,7 @@ public interface InputOutput {
 	String readString(String prompt);
 	void writeObject(Object obj);
 	default void writeObjectLine(Object obj) {
-		writeObject(obj.toString() + "\n");
+		writeObject(obj.toString() + "\n");  
 	}
 
 	default <R> R readObject(String prompt, String errorPrompt, Function<String, R> mapper) {
