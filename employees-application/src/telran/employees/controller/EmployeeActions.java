@@ -45,6 +45,7 @@ public class EmployeeActions {
 		return  new Employee(id, name, birthDate, salary, department);
     }
 	private static long getEmployeeId(InputOutput io) {
+		// V.R. Cool!
 		return Long.parseLong(io.readStringPredicate("enter id", "wrong format for ID", str -> str.matches("\\d{9}")));
 	}
 	static private void addEmployee(InputOutput io) {
@@ -60,17 +61,30 @@ public class EmployeeActions {
 		io.writeObjectLine(employees.getEmployee(EmployeeActions.getEmployeeId(io)));
 	}
 	static private  void getEmployeesByAge(InputOutput io) {
+		// V.R.  -1 is redundant
 		int ageFrom = io.readInt("enter age range FROM", MIN_AGE, MAX_AGE-1);
+		/* V.R. +1 is also redundant. Here is the explanation why it is so
+		 *  The parameters ageFrom and ageTo are used in call of subMap. Right?
+		 *  If the parameters are equal, then subMap returns the empty map.
+		 *  It throws exception in case of ageFrom>ageTo only.
+		 */
+		
 		int ageTo = io.readInt("enter age range TO",ageFrom+1, MAX_AGE);
 		io.writeObjectLine((employees.getEmployeesByAge(ageFrom, ageTo)));
 	}
 	static private  void updateSalary(InputOutput io) {
 		long emplID = EmployeeActions.getEmployeeId(io);
 		int actualSalary = employees.getEmployee(emplID).salary;
+		/* V.R. The new salary has to be between MIN_SALARY and MAX_SALARY
+		 * Sorry, but salary may be decreased.
+		 */
 		int newSalary = io.readInt("Enter new Salary", actualSalary+1, Integer.MAX_VALUE);
 		io.writeObjectLine(employees.updateSalary(emplID, newSalary));
 	}
 	static private  void getEmployeesBySalary(InputOutput io) {
+		/* V.R.
+		 * The same logic (look at my age's remark) has to be implemented
+		 */
 		int minSalary = io.readInt("Enter min range for salary", MIN_SALARY, Integer.MAX_VALUE-1);
 		int maxSalary = io.readInt("Enter max range for salary", minSalary+1, Integer.MAX_VALUE);
 		io.writeObjectLine(employees.getEmployeesBySalary(minSalary, maxSalary));
@@ -87,6 +101,9 @@ public class EmployeeActions {
 	}
 	static private  void getEmployeesByDepartmentAndSalary(InputOutput io) {
 		String department = io.readStringOption("Enter department from list" + departments, departments).toLowerCase();
+		/* V.R.
+		 * The same logic (look at my age's remark) has to be implemented
+		 */
 		int minSalary = io.readInt("Enter min range for salary",MIN_SALARY, Integer.MAX_VALUE-1);
 		int maxSalary = io.readInt("Enter max range for salary", minSalary+1, Integer.MAX_VALUE);
 		io.writeObjectLine(employees.getEmployeesByDepartmentAndSalary(department, minSalary, maxSalary));
